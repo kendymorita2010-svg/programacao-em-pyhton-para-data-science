@@ -1,0 +1,33 @@
+import random
+
+
+
+perguntas  = [
+    
+    'Qual o maior planeta?',
+    'Quem pintou a monalisa?',
+    'Menor pais do mundo?',   
+    
+]
+
+
+respostas = ['jupiter','Da vinci','vaticano']
+
+
+pergunta_da_vez =  random.choice(perguntas)
+print(pergunta_da_vez)
+chute =  input('Resposta: ')
+
+
+if chute in respostas:
+   posicao_chute =  respostas.index(chute)
+   posicao_p =  perguntas.index(pergunta_da_vez)
+   if posicao_chute ==  posicao_p:
+    print('Acertou em cheio!!!')
+   else:
+       print('Quase ... ') 
+
+
+
+else:
+    print('Errou!!!')     

@@ -1,0 +1,70 @@
+# Cadastro do usuário
+nome = "KENDY"
+email = "YUKINAGAWA@WIFORD"
+senha = "YUKI_123"
+
+usuario = {
+    "nome": nome,
+    "email": email,
+    "senha": senha
+}
+
+print("\nCadastro realizado com sucesso!")
+print("Usuário:", usuario["nome"])
+
+# Produtos disponíveis
+produtos = [
+    {"nome": "Notebook", "preco": 3000},
+    {"nome": "Celular", "preco": 1500},
+    {"nome": "Fone de ouvido", "preco": 200}
+]
+
+print("\nProdutos disponíveis:")
+print("1 -", produtos[0]["nome"], "- R$", produtos[0]["preco"])
+print("2 -", produtos[1]["nome"], "- R$", produtos[1]["preco"])
+print("3 -", produtos[2]["nome"], "- R$", produtos[2]["preco"])
+
+# Escolha do produto
+escolha = int(input("\nEscolha o produto (1, 2 ou 3): "))
+quantidade = int(input("Digite a quantidade: "))
+
+if escolha == 1:
+    produto = produtos[0]
+elif escolha == 2:
+    produto = produtos[1]
+elif escolha == 3:
+    produto = produtos[2]
+else:
+    print("Produto inválido!")
+    produto = {"nome": "Nenhum", "preco": 0}
+    quantidade = 0
+
+# Cálculo do valor total
+total = produto["preco"] * quantidade
+
+print("\nProduto:", produto["nome"])
+print("Quantidade:", quantidade)
+print("Valor total: R$", total)
+
+# Pagamento
+if total > 0:
+    print("\nFormas de pagamento:")
+    print("1 - Dinheiro")
+    print("2 - Cartão")
+    print("3 - Pix")
+
+    pagamento = int(input("Escolha a forma de pagamento: "))
+
+    if pagamento == 1:
+        print("Pagamento em dinheiro selecionado.")
+    elif pagamento == 2:
+        print("Pagamento no cartão selecionado.")
+    elif pagamento == 3:
+        print("Pagamento via Pix selecionado.")
+    else:
+        print("Forma de pagamento inválida.")
+
+    print("\nCompra finalizada!")
+    print("Obrigado pela compra,", usuario["nome"] + "!")
+else:
+    print("Não foi possível realizar a compra.")
