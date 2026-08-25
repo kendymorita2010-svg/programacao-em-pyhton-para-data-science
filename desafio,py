@@ -1,0 +1,116 @@
+
+import statistics
+
+
+# ==========================================
+# DICIONÁRIO COM 30 PRODUTOS
+# ==========================================
+
+produtos = {
+    "Produto 1": 10,
+    "Produto 2": 15,
+    "Produto 3": 20,
+    "Produto 4": 25,
+    "Produto 5": 30,
+    "Produto 6": 35,
+    "Produto 7": 40,
+    "Produto 8": 45,
+    "Produto 9": 50,
+    "Produto 10": 55,
+    "Produto 11": 60,
+    "Produto 12": 65,
+    "Produto 13": 70,
+    "Produto 14": 75,
+    "Produto 15": 80,
+    "Produto 16": 85,
+    "Produto 17": 90,
+    "Produto 18": 95,
+    "Produto 19": 100,
+    "Produto 20": 20,
+    "Produto 21": 30,
+    "Produto 22": 40,
+    "Produto 23": 50,
+    "Produto 24": 60,
+    "Produto 25": 70,
+    "Produto 26": 80,
+    "Produto 27": 90,
+    "Produto 28": 100,
+    "Produto 29": 50,
+    "Produto 30": 60
+}
+
+
+# ==========================================
+# EXTRAIR TODOS OS VALORES PARA UMA LISTA
+# ==========================================
+
+valores = []
+
+for valor in produtos.values():
+    valores.append(valor)
+
+
+# ==========================================
+# FUNÇÕES
+# ==========================================
+
+def calcular_media(valores):
+    return statistics.mean(valores)
+
+
+def calcular_mediana(valores):
+    return statistics.median(valores)
+
+
+def calcular_moda(valores):
+    return statistics.multimode(valores)
+
+
+def calcular_variancia(valores):
+    return statistics.pvariance(valores)
+
+
+def calcular_desvio_padrao(valores):
+    return statistics.pstdev(valores)
+
+
+def calcular_amplitude(valores):
+    return max(valores) - min(valores)
+
+
+# ==========================================
+# RESULTADOS
+# ==========================================
+
+print("=" * 45)
+print("       ESTATÍSTICAS DOS PRODUTOS")
+print("=" * 45)
+
+print(f"Média:          {calcular_media(valores):.2f}")
+print(f"Mediana:        {calcular_mediana(valores):.2f}")
+print(f"Moda:           {calcular_moda(valores)}")
+print(f"Variância:      {calcular_variancia(valores):.2f}")
+print(f"Desvio padrão:  {calcular_desvio_padrao(valores):.2f}")
+print(f"Amplitude:      {calcular_amplitude(valores):.2f}")
+
+print("=" * 45)
+
+
+# ==========================================
+# PERGUNTAS
+# ==========================================
+
+print("\nPERGUNTAS")
+print("=" * 45)
+
+print("1. Média é a soma dos valores dividida pela quantidade.")
+print("   Mediana é o valor central dos dados ordenados.")
+
+print("\n2. A moda mostra o valor que mais se repete.")
+
+print("\n3. A variância mostra o quanto os valores")
+print("   estão dispersos em relação à média.")
+
+print("\n4. O desvio padrão é a raiz quadrada da variância.")
+print("   Ele mede a dispersão dos dados.")
+
