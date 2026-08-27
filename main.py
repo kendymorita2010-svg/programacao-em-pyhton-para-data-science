@@ -1,51 +1,66 @@
+import pandas as pd
+
+# ==========================================
+# 1 - Lendo o arquivo CSV
+# ==========================================
+dados = pd.read_csv("dados.csv")
+
+# ==========================================
+# 2 - Criando um DataFrame
+# ==========================================
+df = pd.DataFrame(dados)
+
+print("DATAFRAME:")
+print(df)
 
 
+# ==========================================
+# 3 - Calculando a média de idade
+# ==========================================
+media_idade = df["Idade"].mean()
 
-import numpy as np
-
-
-
-arr = np.array (np.random.randint(0,200,(5,5)))
-for x  in range(5):
-    print(arr[x])
-    media  =  np.mean(arr[x])
-    print('media', media)  
-    print('maior', max(arr[x]))
-    print('menor', min(arr[x]))  
+print("\nMÉDIA DE IDADE:")
+print(media_idade)
 
 
+# ==========================================
+# 4 - Calculando a mediana de idade
+# ==========================================
+mediana_idade = df["Idade"].median()
 
-import numpy as np
-
-
-vendas = np.array([120,90,150,80,200,110,50,300])
-# iterar - percorer
-l = []
-for x in vendas:
-    if x > 100:
-        l.append(x)
-print('Acima de 100', np.array(l))  
+print("\nMEDIANA DE IDADE:")
+print(mediana_idade)
 
 
-media = np.mean(vendas)
-print(media)
+# ==========================================
+# 5 - Buscando os dados da Maria
+# ==========================================
+maria = df[df["Nome"] == "Maria"]
+
+print("\nDADOS DA MARIA:")
+print(maria)
 
 
-abaixo_me = []
+# ==========================================
+# 6 - Informações técnicas do CSV
+# ==========================================
+print("\nINFORMAÇÕES TÉCNICAS:")
+print(df.info())
 
 
-for v in vendas:
-    if v < media:
-        abaixo_me.append(v)
-        maior =  max(abaixo_me)
-        print('divisão', v/maior)
-print('abaixo da média', np.array(abaixo_me))    
+# ==========================================
+# 7 - Descrição básica (estatística)
+# ==========================================
+print("\nDESCRIÇÃO ESTATÍSTICA:")
+print(df.describe())
 
 
-# lista_abaixo  =  np.array([x for x in vendas if vendas media])
-# print(lista_abaixo)
+# ==========================================
+# 8 - Agregação com groupby()
+# ==========================================
+grupo_cidade = df.groupby("Cidade")["Idade"].agg(
+    ["count", "mean", "min", "max"]
+)
 
-
-# lista_c = np.array([x for x in vendas if x > 100])
-# print(lista_c)
-
+print("\nAGREGAÇÃO POR CIDADE:")
+print(grupo_cidade)
