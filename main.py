@@ -1,37 +1,51 @@
 
 
-# atividade  3 
+
+import numpy as np
 
 
 
-def criar_notas():
-    global lista_nomes
-    lista_nomes =  ['ana','Fernanda','Caio','Eloysa']
-    l = []
-    for n in range(len(lista_nomes)):
-        n1  =  float(input('Nota 1'))
-        n2  =  float(input('Nota 2'))
-        n3 =  float(input('Nota 3'))
-        l.append([n1,n2,n3])
-        print('---' * 10)
-    return l    
+arr = np.array (np.random.randint(0,200,(5,5)))
+for x  in range(5):
+    print(arr[x])
+    media  =  np.mean(arr[x])
+    print('media', media)  
+    print('maior', max(arr[x]))
+    print('menor', min(arr[x]))  
 
 
 
-def estatistica():
-    notas  =  criar_notas()
-    nomes  =  lista_nomes
-    medias =  []
-    for n in range(len(nomes)):
-        print('aluno: ', nomes[n])
-        media  =  sum(notas[n])/len(notas[n])
-        print(media)
-        medias.append(media)
-    print('medias:', medias)
-    maior, menor  = max(medias), min(medias)
-    print('maior:', maior, 'menor:', menor)
-    maior_i = medias.index(maior)
-    menor_i = medias.index(menor)
-    print('O aluno com a maior média é ', nomes[maior_i])
-    print('O aluno com a menor média  é ', nomes[menor_i])    
-        
+import numpy as np
+
+
+vendas = np.array([120,90,150,80,200,110,50,300])
+# iterar - percorer
+l = []
+for x in vendas:
+    if x > 100:
+        l.append(x)
+print('Acima de 100', np.array(l))  
+
+
+media = np.mean(vendas)
+print(media)
+
+
+abaixo_me = []
+
+
+for v in vendas:
+    if v < media:
+        abaixo_me.append(v)
+        maior =  max(abaixo_me)
+        print('divisão', v/maior)
+print('abaixo da média', np.array(abaixo_me))    
+
+
+# lista_abaixo  =  np.array([x for x in vendas if vendas media])
+# print(lista_abaixo)
+
+
+# lista_c = np.array([x for x in vendas if x > 100])
+# print(lista_c)
+

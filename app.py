@@ -1,26 +1,41 @@
-import timeit
 import numpy as np
 
 
-# def soma1 ():
-#     lista =  list(range(1,2000))
-#     print(lista)
-#     return lista
 
 
-# soma1()
-# time = timeit.timeit(soma1, number=10)
-# print('função1', time)
+
+temperaturas = np.array([22, 25, 19, 30, 28, 21, 18, 33])
 
 
-lista =  list(range(1,2000))
-def soma():
-    aleatorio1 =  np.array(lista)
-    # print(aleatorio1)
-    print(aleatorio1)
-    return aleatorio1
+# Filtre apenas as temperaturas acima de 24 graus.
 
 
-time = timeit.timeit(soma, number=10)
-print('função2', time)
+acima  =  np.array([n for n in temperaturas if n > 24])
+print(acima)
 
+
+# Calcule quantas temperaturas ficaram acima da média.
+
+
+media  =  np.mean(temperaturas)
+print(media)
+
+
+lista_acima =  np.array([z for z in temperaturas if z > media])
+print(lista_acima)
+
+
+
+# Crie um novo array com os valores normalizados 
+
+
+novo =  [t for t in temperaturas if t < media]
+
+
+# (subtraia a média e divida pelo desvio padrão).
+
+
+desv = round(np.std((novo)),2)
+print(desv)
+sub =  novo - desv
+print(np.array(sub))
