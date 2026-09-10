@@ -1,58 +1,42 @@
-import tkinter as tk
-from tkinter import messagebox
-from entry import Inserir_dados, exibir_grafico
+# # from sklearn.linear_model import LinearRegression
+# from sklearn.neighbors import KNeighborsClassifier
+# import numpy as np
 
-janela = tk.Tk()
-janela.title("Cadastro de Clientes")
-janela.geometry("300x300")
+# frutas_caracteristicas  =  np.array([[7,150],[8,170], [6,130], [9,180], [5,120]])
+# classes_frutas  =  np.array([0,0,1,0,1])
 
-# 1º - Widgets de entrada
-tk.Label(janela, text="Nome").pack()
-entrada_nome = tk.Entry(janela)
-entrada_nome.pack()
-
-tk.Label(janela, text="Email").pack()
-entrada_email = tk.Entry(janela)
-entrada_email.pack()
-
-tk.Label(janela, text="Salário").pack()
-entrada_salario = tk.Entry(janela)
-entrada_salario.pack()
-
-tk.Label(janela, text="Cargo").pack()
-entrada_cargo = tk.Entry(janela)
-entrada_cargo.pack()
+# modelo = KNeighborsClassifier(n_neighbors=3)
+# modelo.fit(frutas_caracteristicas, classes_frutas)
 
 
-# 2º - Função que só coleta os campos e chama a lógica do entry.py
-def ao_clicar_inserir():
-    nome = entrada_nome.get()
-    email = entrada_email.get()
-    salario = entrada_salario.get()
-    cargo = entrada_cargo.get()
+# nova_ = np.array([[4,120]])
+# classifica = modelo.predict(nova_)[0]
 
-    if not nome or not email or not salario or not cargo:
-        messagebox.showwarning("Aviso", "Preencha todos os campos.")
-        return
+# tipo = 'maça' if classifica == 0 else 'laranja'
 
-    try:
-        salario = float(salario)
-    except ValueError:
-        messagebox.showerror("Erro", "Salário inválido.")
-        return
-
-    Inserir_dados(nome, email, salario, cargo)
-
-    entrada_nome.delete(0, tk.END)
-    entrada_email.delete(0, tk.END)
-    entrada_salario.delete(0, tk.END)
-    entrada_cargo.delete(0, tk.END)
-
-    messagebox.showinfo("Sucesso", "Cliente inserido com sucesso!")
+# print(classifica)
 
 
-# 3º - Botões
-tk.Button(janela, text="Inserir", command=ao_clicar_inserir).pack(pady=10)
-tk.Button(janela, text="Ver Gráfico", command=exibir_grafico).pack()
 
-janela.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+# horas_estudos  =  np.array([2,4,6,8,10]).reshape(-1,1)
+# notas  =  np.array([4,4.5,5,7.5,8])
+
+# modelo = LinearRegression()
+# modelo.fit(horas_estudos, notas)
+
+# hora_estudo = 7
+# previsao = modelo.predict([[hora_estudo]])[0]
+# print(previsao)
