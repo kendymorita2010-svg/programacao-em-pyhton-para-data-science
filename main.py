@@ -1,46 +1,54 @@
-import requests
-from bs4 import BeautifulSoup
-import csv
 
-URL = "https://gratuitos.netlify.app"
+import streamlit as st
+import sqlite3 
+import plotly.express as px 
+import pandas as pd
 
-def extrair_cursos():
-    resposta = requests.get(URL)
-    resposta.raise_for_status()
+st.header('ANALISE')
 
-    soup = BeautifulSoup(resposta.text, "html.parser")
-
-    tabela = soup.find("table")
-    if not tabela:
-        print("Nenhuma tabela encontrada na página.")
-        return []
-
-    linhas = tabela.find_all("tr")
-
-    # Cabeçalho
-    cabecalho = [th.get_text(strip=True) for th in linhas[0].find_all(["th", "td"])]
-
-    dados = []
-    for linha in linhas[1:]:
-        colunas = [td.get_text(strip=True) for td in linha.find_all("td")]
-        if colunas:
-            dados.append(dict(zip(cabecalho, colunas)))
-
-    return dados
+conn =  sqlite3.connect('vendas_prod.db')
+cursor =  conn.cursor()
+cursor.execute(''' CREATE TABLE IF NOT EXISTS vendas(
+       
+    produto TEXT,
+    valor REAL,
+    quantidade INTEGER
+       
+    
+) ''')
 
 
-def salvar_csv(dados, nome_arquivo="cursos.csv"):
-    if not dados:
-        return
-    with open(nome_arquivo, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=dados[0].keys())
-        writer.writeheader()
-        writer.writerows(dados)
-    print(f"Arquivo salvo: {nome_arquivo}")
+# produto =  st.text_input('Digite o produto: ')
+produto =  st.text_input('Produto: ')
+valor  =  st.number_input('Valor', value  =  0.0)
+quantidade  =  st.number_input('Quantidade')
+
+st.markdown('***')
 
 
-if __name__ == "__main__":
-    cursos = extrair_cursos()
-    for curso in cursos:
-        print(curso)
-    salvar_csv(cursos)
+# cursor.execute('SELECT COUNT(*) FROM vendas')
+if st.button('Inserir'):
+    cursor.execute('INSERT INTO vendas VALUES(?,?,?)', (produto, valor, quantidade))
+    conn.commit()
+
+
+
+# leitura dos dados
+df  =  pd.read_sql_query('SELECT * FROM  vendas', conn)
+conn.close()
+
+# st.write(df)
+
+st.table(df)
+
+
+st.markdown('***')
+
+st.subheader('Resumo dos dados')
+total_faturamento  = (df['valor'] * df['quantidade']).sum()
+
+st.write('Faturamento total', f' R$ {total_faturamento}')
+st.subheader('GRAFICO DE BARRAS')
+fig = px.bar(df, x =  'produto', y= 'valor', title='VALOR PRODUTO')
+
+st.plotly_chart(fig, use_container_width=True)		
