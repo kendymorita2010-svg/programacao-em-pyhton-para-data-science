@@ -1,54 +1,49 @@
-
-import streamlit as st
-import sqlite3 
-import plotly.express as px 
 import pandas as pd
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 
-st.header('ANALISE')
-
-conn =  sqlite3.connect('vendas_prod.db')
-cursor =  conn.cursor()
-cursor.execute(''' CREATE TABLE IF NOT EXISTS vendas(
-       
-    produto TEXT,
-    valor REAL,
-    quantidade INTEGER
-       
+def carregar_dados(caminho_csv):
+    """Lê, trata e categoriza os dados dos Pokémon."""
+    df = pd.read_csv(caminho_csv)
     
-) ''')
+    # Tratamento de nulos
+    df['Type 2'] = df['Type 2'].fillna('None')
+    
+    # Criar novas variáveis
+    df['Total_Stats'] = df['HP'] + df['Attack'] + df['Defense'] + df['Sp. Atk'] + df['Sp. Def'] + df['Speed']
+    
+    # Classificação por Função (Role)
+    condicoes = [
+        (df['Speed'] >= 95),
+        (df['Defense'] + df['Sp. Def'] >= 200)
+    ]
+    escolhas = ['Sweeper (Rápido)', 'Tank (Defensivo)']
+    df['Role'] = np.select(condicoes, escolhas, default='Balanced')
+    
+    # Mapeamento de Trios Lendários
+    aves_lendarias = ['Articuno', 'Zapdos', 'Moltres']
+    feras_lendarias = ['Raikou', 'Entei', 'Suicune']
+    trio_hoenn = ['Groudon', 'Kyogre', 'Rayquaza']
+    
+    df['Trio'] = 'Nenhum'
+    df.loc[df['Name'].isin(aves_lendarias), 'Trio'] = 'Aves Lendárias (Kanto)'
+    df.loc[df['Name'].isin(feras_lendarias), 'Trio'] = 'Feras Lendárias (Johto)'
+    df.loc[df['Name'].isin(trio_hoenn), 'Trio'] = 'Criadores de Hoenn'
+    
+    return df
 
-
-# produto =  st.text_input('Digite o produto: ')
-produto =  st.text_input('Produto: ')
-valor  =  st.number_input('Valor', value  =  0.0)
-quantidade  =  st.number_input('Quantidade')
-
-st.markdown('***')
-
-
-# cursor.execute('SELECT COUNT(*) FROM vendas')
-if st.button('Inserir'):
-    cursor.execute('INSERT INTO vendas VALUES(?,?,?)', (produto, valor, quantidade))
-    conn.commit()
-
-
-
-# leitura dos dados
-df  =  pd.read_sql_query('SELECT * FROM  vendas', conn)
-conn.close()
-
-# st.write(df)
-
-st.table(df)
-
-
-st.markdown('***')
-
-st.subheader('Resumo dos dados')
-total_faturamento  = (df['valor'] * df['quantidade']).sum()
-
-st.write('Faturamento total', f' R$ {total_faturamento}')
-st.subheader('GRAFICO DE BARRAS')
-fig = px.bar(df, x =  'produto', y= 'valor', title='VALOR PRODUTO')
-
-st.plotly_chart(fig, use_container_width=True)		
+def treinar_modelo_legendarios(df):
+    """Treina o modelo de Random Forest para prever Pokémon Lendários."""
+    atributos = ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed']
+    X = df[atributos]
+    y = df['Legendary']
+    
+    modelo = RandomForestClassifier(random_state=42)
+    modelo.fit(X, y)
+    
+    df_importancia = pd.DataFrame({
+        'Atributo': atributos,
+        'Importância': modelo.feature_importances_
+    }).sort_values(by='Importância', ascending=False)
+    
+    return df_importancia
